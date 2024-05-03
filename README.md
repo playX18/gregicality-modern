@@ -1,10 +1,12 @@
-# Gregicality Modern
+# GTX - GregTech eXtra
 
-Attempt to port some parts of GCYL and TJ into GregTech Modern using KubeJS and custom mod if necessary. 
+GregTechCEu Modern addon which ports Gregicality lines and features. Alongside with all the materials and all the "horrible" stuff from it. To be optimized and turned into enjoyable experience later.
 
-# Plans
+# Stuff that is done
+- Gold Line
+- Lithium Line
 
-- ~~Port gold line~~ DONE
-- Port epoxy line and oil lines
-- Circuits
-- GCYL multis like nanoforge, IPBF etc
+# Credits
+
+Credit goes to GCYL and GCYL TJ fork authors, and to TJ authors for making GCYL slightly more enjoyable and playable, recipes are ported or take inspiration from what they are in TJ and GCYL-TJ.
+Also credit goes to everyone who's helping me in GTCEU discord server with addon development.
