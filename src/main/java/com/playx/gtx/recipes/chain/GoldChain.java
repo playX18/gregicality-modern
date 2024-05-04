@@ -19,45 +19,6 @@ import java.util.function.Consumer;
 
 public class GoldChain {
     public static void init() {
-        GTXMaterials.PotassiumMetabisulfite = new Material.Builder(GTXMod.id("potassium_metabisulfite"))
-                .dust()
-                .color(0xFFFFFF)
-                .iconSet(MaterialIconSet.DULL)
-                .components(GTMaterials.Potassium, 2, GTMaterials.Sulfur, 2, GTMaterials.Oxygen, 5)
-                .buildAndRegister();
-
-        GTXMaterials.GoldAlloy = new Material.Builder(GTXMod.id("gold_alloy"))
-                .ingot()
-                .color(0xBBA52B)
-                .iconSet(MaterialIconSet.SHINY)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
-                .components(GTMaterials.Copper, 3, GTMaterials.Gold, 1, GTMaterials.RareEarth, 1)
-                .buildAndRegister();
-
-        GTXMaterials.GoldLeach = new Material.Builder(GTXMod.id("gold_leach"))
-                .dust()
-                .color(0xBBA52B)
-                .iconSet(MaterialIconSet.ROUGH)
-                .buildAndRegister().setFormula("Cu3Au?");
-
-        GTXMaterials.CopperLeach = new Material.Builder(GTXMod.id("copper_leach"))
-                .dust()
-                .color(0x765A30)
-                .iconSet(MaterialIconSet.SHINY)
-                .buildAndRegister().setFormula("Cu3?");
-
-        GTXMaterials.PreciousMetal = new Material.Builder((GTXMod.id("precious_metal")))
-                .ingot()
-                .color( 0xB99023)
-                .iconSet(MaterialIconSet.SHINY)
-                .components(GTMaterials.Gold, 1, GTMaterials.RareEarth, 1)
-                .flags(MaterialFlags.DISABLE_DECOMPOSITION)
-                .buildAndRegister();
-
-        GTXMaterials.ChloroauricAcid = new Material.Builder(GTXMod.id("chloroauric_acid"))
-                .fluid()
-                .color(0xDFD11F)
-                .buildAndRegister().setFormula("HAuCl?");
     }
 
     public static void goldChain(Consumer<FinishedRecipe> provider) {

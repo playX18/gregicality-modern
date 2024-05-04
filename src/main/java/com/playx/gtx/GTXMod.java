@@ -66,6 +66,8 @@ public class GTXMod {
         LOGGER.info("Hey, we're on Minecraft version {}!", Minecraft.getInstance().getLaunchedVersion());
     }
 
+
+
     // You MUST have this for custom materials.
     // Remember to register them not to GT's namespace, but your own.
     private void addMaterialRegistries(MaterialRegistryEvent event) {
@@ -79,7 +81,7 @@ public class GTXMod {
 
     // This is optional, though.
     private void modifyMaterials(PostMaterialEvent event) {
-        //CustomMaterials.modify();
+        GTXMaterials.modifyMaterials();
     }
 
     private void registerRecipeTypes(GTCEuAPI.RegisterEvent<ResourceLocation, GTRecipeType> event) {

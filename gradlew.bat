@@ -90,3 +90,6 @@ exit /b %EXIT_CODE%
 if "%OS%"=="Windows_NT" endlocal
 
 :omega
+
+rem Uncomment when needed
+rem xcopy /y ".\build\libs\gtx-0.0.1.jar" "C:\Users\Adel\AppData\Roaming\PrismLauncher\instances\1.20.1\.minecraft\mods"

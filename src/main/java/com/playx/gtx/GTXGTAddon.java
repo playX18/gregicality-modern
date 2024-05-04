@@ -3,6 +3,7 @@ package com.playx.gtx;
 import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
+import com.playx.gtx.materials.GTXElements;
 import com.playx.gtx.recipes.GTXRecipes;
 import net.minecraft.data.recipes.FinishedRecipe;
 
@@ -42,6 +43,10 @@ public class GTXGTAddon implements IGTAddon {
         GTXRecipes.registerRecipes(provider);
     }
 
+    @Override
+    public void registerElements() {
+        GTXElements.init();
+    }
 
     // If you have custom ingredient types, uncomment this & change to match your capability.
     // KubeJS WILL REMOVE YOUR RECIPES IF THESE ARE NOT REGISTERED.
