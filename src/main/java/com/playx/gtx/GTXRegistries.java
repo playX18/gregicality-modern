@@ -1,6 +1,7 @@
 package com.playx.gtx;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialRegistryEvent;
 import com.gregtechceu.gtceu.api.data.chemical.material.registry.MaterialRegistry;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
@@ -14,6 +15,10 @@ public class GTXRegistries {
 
     public static void registerMaterials() {
         GTXMaterials.init();
+    }
+
+    public static MaterialRegistry getMaterialRegistry() {
+        return MATERIAL_REGISTRY;
     }
 
     public static void registerMaterialRegistryEvent(MaterialRegistryEvent event) {

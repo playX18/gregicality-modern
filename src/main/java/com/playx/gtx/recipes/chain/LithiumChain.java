@@ -1,14 +1,13 @@
 package com.playx.gtx.recipes.chain;
 
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.playx.gtx.GTXMod;
 import com.playx.gtx.materials.GTXMaterials;
 import net.minecraft.data.recipes.FinishedRecipe;
-import org.arbor.gtnn.data.GTNNRecipeTypes;
+import dev.arbor.gtnn.data.GTNNRecipeTypes;
+
 
 import java.util.function.Consumer;
 
@@ -85,7 +84,7 @@ public class LithiumChain {
                 .save(provider);
 
         // [LiCl + H2O] = LiCl + H2O (H2O Voided - Dehydrator)
-        GTNNRecipeTypes.DEHYDRATOR_RECIPES.recipeBuilder(GTXMod.id("dehydrate_lithium_chloride_solution"))
+        GTNNRecipeTypes.INSTANCE.getDEHYDRATOR_RECIPES().recipeBuilder(GTXMod.id("dehydrate_lithium_chloride_solution"))
                 .duration(180)
                 .EUt(120)
                 .inputFluids(GTXMaterials.LithiumChlorideSolution.getFluid(1000))

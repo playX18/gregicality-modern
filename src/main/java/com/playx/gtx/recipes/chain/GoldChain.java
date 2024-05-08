@@ -1,18 +1,12 @@
 package com.playx.gtx.recipes.chain;
 
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags;
-import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
-import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
-import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
+import dev.arbor.gtnn.data.GTNNRecipeTypes;
 import net.minecraft.data.recipes.FinishedRecipe;
-import com.playx.gtx.GTXMod;
 import com.playx.gtx.materials.GTXMaterials;
-import org.arbor.gtnn.data.GTNNRecipeTypes;
+
 
 
 import java.util.function.Consumer;
@@ -22,6 +16,17 @@ public class GoldChain {
     }
 
     public static void goldChain(Consumer<FinishedRecipe> provider) {
+        GTRecipeTypes.FURNACE_RECIPES.recipeBuilder("smelt_precious_ore")
+                .inputItems(TagPrefix.dust, GTXMaterials.PreciousMetal, 1)
+                .outputItems(TagPrefix.nugget, GTMaterials.Gold, 1)
+                .duration(100)
+                .build();
+        GTRecipeTypes.FURNACE_RECIPES.recipeBuilder("smelt_precious_ore")
+                .inputItems(TagPrefix.ingot, GTXMaterials.PreciousMetal, 1)
+                .outputItems(TagPrefix.nugget, GTMaterials.Gold, 1)
+                .duration(100)
+                .build();
+
 
         GTRecipeTypes.CENTRIFUGE_RECIPES.recipeBuilder("step_1_gold_alloy_recovery")
                 .inputItems(TagPrefix.dust, GTXMaterials.GoldAlloy, 4)
@@ -103,7 +108,7 @@ public class GoldChain {
                 .outputItems(TagPrefix.dust, GTXMaterials.PotassiumMetabisulfite, 9)
                 .save(provider);
 
-        GTNNRecipeTypes.DEHYDRATOR_RECIPES.recipeBuilder("dehydrate_copper_leach").duration(80)
+        GTNNRecipeTypes.INSTANCE.getDEHYDRATOR_RECIPES().recipeBuilder("dehydrate_copper_leach").duration(80)
                 .inputItems(TagPrefix.dust, GTXMaterials.CopperLeach, 4)
                 .outputItems(TagPrefix.dust, GTMaterials.Copper, 3)
                 .chancedOutput(TagPrefix.dust, GTMaterials.Lead, 1500, 500)

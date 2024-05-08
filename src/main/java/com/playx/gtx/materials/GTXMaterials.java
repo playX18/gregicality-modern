@@ -22,12 +22,10 @@ import com.gregtechceu.gtceu.common.data.GTElements;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import com.playx.gtx.GTXMod;
-import com.playx.gtx.recipes.GTXRecipes;
 import com.playx.gtx.recipes.chain.GoldChain;
 import com.playx.gtx.recipes.chain.LithiumChain;
 import net.minecraft.resources.ResourceLocation;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material.Builder;
-import org.arbor.gtnn.data.GTNNMaterials;
 
 import static com.google.common.collect.ImmutableList.of;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
@@ -42,6 +40,7 @@ public class GTXMaterials {
 
     public static final MaterialFlag DISABLE_REPLICATION = new MaterialFlag.Builder("disable_replication").requireProps(PropertyKey.INGOT).build();
     public static final MaterialFlag GENERATE_NUCLEAR_COMPOUND = new MaterialFlag.Builder("generate_nuclear_compound").requireProps(PropertyKey.INGOT).build();
+    public static final MaterialFlag GENERATE_ISOTOPES_COMPOUND = new MaterialFlag.Builder("generate_isotopes_compound").requireProps(PropertyKey.INGOT).build();
     public static final MaterialFlag GENERATE_ROUND = new MaterialFlag.Builder("generate_round").requireProps(PropertyKey.INGOT).build();
     public static final MaterialFlag GENERATE_METAL_CASING = new MaterialFlag.Builder("generate_metal_casing").requireProps(PropertyKey.INGOT).build();
     public static final MaterialFlag SMELT_INTO_FLUID = new MaterialFlag.Builder("smelt_into_fluid").build();
@@ -324,13 +323,17 @@ public class GTXMaterials {
         return builder.buildAndRegister();
     }
 
-    public static Material Trinium = new Builder(id("trinium"))
-            .ingot()
-            .color(0x9aa19c)
-            .iconSet(MaterialIconSet.SHINY)
-            .blastTemp(8600)
-            .element(GTXElements.Trinium)
-            .buildAndRegister();
+    public static final RadioactiveMaterial Protactinium = new RadioactiveMaterial(GTMaterials.Protactinium);
+    public static final RadioactiveMaterial UraniumRadioactive = new RadioactiveMaterial(Uranium238);
+    public static final RadioactiveMaterial Neptunium = new RadioactiveMaterial(GTMaterials.Neptunium);
+    public static final RadioactiveMaterial PlutoniumRadioactive = new RadioactiveMaterial(GTMaterials.Plutonium239);
+    public static final RadioactiveMaterial Curium = new RadioactiveMaterial(GTMaterials.Curium);
+    public static final RadioactiveMaterial Berkelium = new RadioactiveMaterial(GTMaterials.Berkelium);
+    public static final RadioactiveMaterial Californium = new RadioactiveMaterial(GTMaterials.Californium);
+    public static final RadioactiveMaterial Einsteinium = new RadioactiveMaterial(GTMaterials.Einsteinium);
+    public static final RadioactiveMaterial Fermium = new RadioactiveMaterial(GTMaterials.Fermium);
+    public static final RadioactiveMaterial Mendelevium = new RadioactiveMaterial(GTMaterials.Mendelevium);
+
     public static Material Adamantium = new Builder(id("adamantium"))
             .ingot()
             .color(0x2d365c)
@@ -343,6 +346,7 @@ public class GTXMaterials {
             .color(0x828aad)
             .iconSet(MaterialIconSet.SHINY)
             .blastTemp(11220)
+            .flags(GENERATE_FRAME, GENERATE_PLATE, GENERATE_METAL_CASING)
             .element(GTXElements.Vibranium)
             .buildAndRegister();
     public static Material Taranium = new Builder(id("taranium"))
@@ -376,26 +380,75 @@ public class GTXMaterials {
 
 
 
-    // nuclear materials
-    // thorium
-    public static Material Thorium232Isotope = IngotMaterial(0, "thorium_232_isotope", Thorium.getMaterialRGB() - 20, MaterialIconSet.SHINY, 0, of(new MaterialStack(Thorium, 1)), of(DISABLE_DECOMPOSITION), GTElements.Th, 0);
-    public static Material Thorium233 = IngotMaterial(0, "thorium_233", Thorium.getMaterialRGB() - 20, MaterialIconSet.SHINY, 0, of(new MaterialStack(Thorium, 1)), of(DISABLE_DECOMPOSITION), GTElements.Th, 0);;
+    // NUCLEAR MATERIALS
+    // Thorium
+    public static final RadioactiveMaterial ThoriumRadioactive = new RadioactiveMaterial(Thorium);
+    public static final IsotopeMaterial Thorium232Isotope = new IsotopeMaterial(Thorium, RadioactiveMaterial.REGISTRY.get(Thorium), 232);
+    public static final IsotopeMaterial Thorium233 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Thorium), 233);
 
-    // Protoactinium
-    public static Material Protoactinium233 = IngotMaterial(0, "protoactinium_233", Thorium.getMaterialRGB() - 20, MaterialIconSet.SHINY, 0, of(), of(DISABLE_DECOMPOSITION), GTElements.Pr, 0);;
+    // Protactinium
+    public static final IsotopeMaterial Protactinium233 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Protactinium.getMaterial()), 233);
 
     // Uranium
-    public static Material Uranium238Isotope = IngotMaterial(0, "uranium_238_isotope", Uranium238.getMaterialRGB() - 20, MaterialIconSet.SHINY, 0, of(), of(DISABLE_DECOMPOSITION), GTElements.U, 0);;
-    public static Material Uranium233 = IngotMaterial(0, "uranium_233", Uranium238.getMaterialRGB() - 20, MaterialIconSet.SHINY, 0, of(), of(DISABLE_DECOMPOSITION), GTElements.U, 0);
-    public static Material Uranium234 = IngotMaterial(0, "uranium_234", Uranium238.getMaterialRGB() - 20, MaterialIconSet.SHINY, 0, of(), of(DISABLE_DECOMPOSITION), GTElements.U, 0);
-    public static Material Uranium235Isotope = IngotMaterial(0, "uranium_235_isotope", Uranium238.getMaterialRGB() - 20, MaterialIconSet.SHINY, 0, of(), of(DISABLE_DECOMPOSITION), GTElements.U, 0);;
-    public static Material Uranium239 = IngotMaterial(0, "uranium_239", Uranium238.getMaterialRGB() - 20, MaterialIconSet.SHINY, 0, of(), of(DISABLE_DECOMPOSITION), GTElements.U, 0);
+    public static final IsotopeMaterial Uranium238Isotope = new IsotopeMaterial(Uranium238, RadioactiveMaterial.REGISTRY.get(UraniumRadioactive.getMaterial()), 238);
+    public static final IsotopeMaterial Uranium233 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(UraniumRadioactive.getMaterial()), 233);
+    public static final IsotopeMaterial Uranium234 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(UraniumRadioactive.getMaterial()), 234);
+    public static final IsotopeMaterial Uranium235Isotope = new IsotopeMaterial(Uranium235, RadioactiveMaterial.REGISTRY.get(UraniumRadioactive.getMaterial()), 235);
+    public static final IsotopeMaterial Uranium239 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(UraniumRadioactive.getMaterial()), 239);
 
     // Neptunium
-    public static Material Neptunium235 = IngotMaterial(0, "neptunium_235", Neptunium.getMaterialRGB() - 20, MaterialIconSet.SHINY, 0, of(), of(DISABLE_DECOMPOSITION), GTElements.Np, 0);
-    public static Material Neptunium237 = IngotMaterial(0, "neptunium_237", Neptunium.getMaterialRGB() - 20, MaterialIconSet.SHINY, 0, of(), of(DISABLE_DECOMPOSITION), GTElements.Np, 0);
-    public static Material Neptunium239 = IngotMaterial(0, "neptunium_239", Neptunium.getMaterialRGB() - 20, MaterialIconSet.SHINY, 0, of(), of(DISABLE_DECOMPOSITION), GTElements.Np, 0);
+    public static final IsotopeMaterial Neptunium235 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Neptunium.getMaterial()), 235);
+    public static final IsotopeMaterial Neptunium237 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Neptunium.getMaterial()), 237);
+    public static final IsotopeMaterial Neptunium239 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Neptunium.getMaterial()), 239);
 
+    // Plutonium
+    public static final IsotopeMaterial Plutonium239 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(PlutoniumRadioactive.getMaterial()), 239);
+    public static final IsotopeMaterial Plutonium240 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(PlutoniumRadioactive.getMaterial()), 240);
+    public static final IsotopeMaterial Plutonium241Isotope = new IsotopeMaterial(Plutonium241, RadioactiveMaterial.REGISTRY.get(PlutoniumRadioactive.getMaterial()), 241);
+    public static final IsotopeMaterial Plutonium244Isotope = new IsotopeMaterial(Plutonium241, RadioactiveMaterial.REGISTRY.get(PlutoniumRadioactive.getMaterial()), 244);
+    public static final IsotopeMaterial Plutonium245 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(PlutoniumRadioactive.getMaterial()), 245);
+
+    // Americium
+    public static final RadioactiveMaterial AmericiumRadioactive = new RadioactiveMaterial(Americium);
+    public static final IsotopeMaterial Americium241 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Americium), 241);
+    public static final IsotopeMaterial Americium243 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Americium), 243);
+    public static final IsotopeMaterial Americium245 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Americium), 245);
+
+    // Curium
+    public static final IsotopeMaterial Curium245 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Curium.getMaterial()), 245);
+    public static final IsotopeMaterial Curium246 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Curium.getMaterial()), 246);
+    public static final IsotopeMaterial Curium247 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Curium.getMaterial()), 247);
+    public static final IsotopeMaterial Curium250 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Curium.getMaterial()), 250);
+    public static final IsotopeMaterial Curium251 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Curium.getMaterial()), 251);
+
+    // Berkelium
+    public static final IsotopeMaterial Berkelium247 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Berkelium.getMaterial()), 247);
+    public static final IsotopeMaterial Berkelium249 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Berkelium.getMaterial()), 249);
+    public static final IsotopeMaterial Berkelium251 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Berkelium.getMaterial()), 251);
+
+    // Californium
+    public static final IsotopeMaterial Californium251 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Californium.getMaterial()), 251);
+    public static final IsotopeMaterial Californium252 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Californium.getMaterial()), 252);
+    public static final IsotopeMaterial Californium253 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Californium.getMaterial()), 253);
+    public static final IsotopeMaterial Californium256 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Californium.getMaterial()), 256);
+    public static final IsotopeMaterial Californium257 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Californium.getMaterial()), 257);
+
+    // Einsteinium
+    public static final IsotopeMaterial Einsteinium253 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Einsteinium.getMaterial()), 253);
+    public static final IsotopeMaterial Einsteinium255 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Einsteinium.getMaterial()), 255);
+    public static final IsotopeMaterial Einsteinium257 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Einsteinium.getMaterial()), 257);
+
+    // Fermium
+    public static final IsotopeMaterial Fermium257 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Fermium.getMaterial()), 257);
+    public static final IsotopeMaterial Fermium258 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Fermium.getMaterial()), 258);
+    public static final IsotopeMaterial Fermium259 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Fermium.getMaterial()), 259);
+    public static final IsotopeMaterial Fermium262 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Fermium.getMaterial()), 262);
+    public static final IsotopeMaterial Fermium263 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Fermium.getMaterial()), 263);
+
+    // Mendelevium
+    public static final IsotopeMaterial Mendelevium259 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Mendelevium.getMaterial()), 259);
+    public static final IsotopeMaterial Mendelevium261 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Mendelevium.getMaterial()), 261);
+    public static final IsotopeMaterial Mendelevium263 = new IsotopeMaterial(RadioactiveMaterial.REGISTRY.get(Mendelevium.getMaterial()), 263);
     // FLUID MATERIALS
     public static Material NeutralMatter = new Builder(id("neutral_matter"))
             .fluid()
@@ -502,13 +555,13 @@ public class GTXMaterials {
             .components(GTMaterials.Osmium, 1, Oxygen, 4, Water, 1)
             .flags(DISABLE_DECOMPOSITION)
             .buildAndRegister();
-    public static Material AcidicOsmiumSolution = new Builder(id("acidic_osmium_solution"))
+    /*public static Material AcidicOsmiumSolution = new Builder(id("acidic_osmium_solution"))
             .fluid()
             .iconSet(MaterialIconSet.FLUID)
             .color(((GTMaterials.Osmium.getMaterialRGB() + Water.getMaterialRGB()) / 2) - 20)
             .components(GTMaterials.Osmium, 1, Oxygen, 4, Water, 1, GTMaterials.HydrochloricAcid, 1)
             .flags(DISABLE_DECOMPOSITION)
-            .buildAndRegister();
+            .buildAndRegister();*/
 
     public static Material IridiumDioxide = new Builder(id("iridium_dioxide"))
             .dust()
@@ -609,13 +662,11 @@ public class GTXMaterials {
     public static final Material SodiumSulfate = DustMaterial(890, "sodium_sulfate", 0xFFFFFF, MaterialIconSet.ROUGH, 2, of(new MaterialStack(Sodium, 2), new MaterialStack(Sulfur, 1), new MaterialStack(Oxygen, 4)), of());
     public static final Material PotassiumDisulfate = DustMaterial(888, "potassium_disulfate", 0xFBBB66, MaterialIconSet.DULL, 2, of(new MaterialStack(Potassium, 2), new MaterialStack(Sulfur, 2), new MaterialStack(Oxygen, 7)), of(EXCLUDE_BLOCK_CRAFTING_RECIPES, SMELT_INTO_FLUID));
     public static final Material LeachResidue = DustMaterial(887, "leach_residue", 0x644629, MaterialIconSet.ROUGH, 2, of(new MaterialStack(Iridium, 2), new MaterialStack(RareEarth, 1), new MaterialStack(RareEarth, 1)), of(DISABLE_DECOMPOSITION));
-    public static final Material CalciumChloride = DustMaterial(884, "calcium_chloride", 0xFFFFFF, MaterialIconSet.DULL, 2, of(new MaterialStack(Calcium, 1), new MaterialStack(Chlorine, 2)), of());
+    //public static final Material CalciumChloride = DustMaterial(884, "calcium_chloride", 0xFFFFFF, MaterialIconSet.DULL, 2, of(new MaterialStack(Calcium, 1), new MaterialStack(Chlorine, 2)), of());
     public static final Material SodiumRuthenate = DustMaterial(882, "sodium_ruthenate", 0x3A40CB, MaterialIconSet.SHINY, 2, of(new MaterialStack(Sodium, 2), new MaterialStack(Oxygen, 4), new MaterialStack(Ruthenium, 1)), of(DISABLE_DECOMPOSITION));
-    public static final Material RutheniumTetroxide = DustMaterial(881, "ruthenium_tetroxide", 0xC7C7C7, MaterialIconSet.DULL, 2, of(new MaterialStack(Ruthenium, 1), new MaterialStack(Oxygen, 4)), of(SMELT_INTO_FLUID, EXCLUDE_BLOCK_CRAFTING_RECIPES, DISABLE_DECOMPOSITION));
+    //public static final Material RutheniumTetroxide = DustMaterial(881, "ruthenium_tetroxide", 0xC7C7C7, MaterialIconSet.DULL, 2, of(new MaterialStack(Ruthenium, 1), new MaterialStack(Oxygen, 4)), of(SMELT_INTO_FLUID, EXCLUDE_BLOCK_CRAFTING_RECIPES, DISABLE_DECOMPOSITION));
     public static final Material RarestMetalResidue = DustMaterial(878, "rarest_metal_residue", 0x644629, MaterialIconSet.ROUGH, 2, of(new MaterialStack(Iridium, 2), new MaterialStack(Oxygen, 2), new MaterialStack(SiliconDioxide, 2), new MaterialStack(Gold, 3), new MaterialStack(RareEarth, 1)), of(GENERATE_ORE, DISABLE_DECOMPOSITION));
-    public static final Material IrMetalResidue = DustMaterial(877, "iridium_metal_residue", 0x846649, MaterialIconSet.ROUGH, 2, of(new MaterialStack(Iridium, 2), new MaterialStack(Oxygen, 4), new MaterialStack(SiliconDioxide, 2), new MaterialStack(Gold, 3)), of(GENERATE_ORE, DISABLE_DECOMPOSITION));
     public static final Material PGSDResidue = DustMaterial(876, "sludge_dust_residue", (SiliconDioxide.getMaterialRGB() + Gold.getMaterialRGB())/2, MaterialIconSet.DULL, 2, of(new MaterialStack(SiliconDioxide, 2), new MaterialStack(Gold, 3)), of(DISABLE_DECOMPOSITION));
-    public static final Material IridiumChloride = DustMaterial(871, "iridium_chloride", (Iridium.getMaterialRGB()+Chlorine.getMaterialRGB())/2, MaterialIconSet.LAPIS, 2, of(new MaterialStack(Iridium, 1), new MaterialStack(Chlorine, 3)), of(DISABLE_DECOMPOSITION));
     public static final Material PGSDResidue2 = DustMaterial(870, "metallic_sludge_dust_residue", (Copper.getMaterialRGB()+Nickel.getMaterialRGB())/2, MaterialIconSet.DULL, 2, of(new MaterialStack(Copper, 1), new MaterialStack(Nickel, 1)), of(DECOMPOSITION_BY_CENTRIFUGING));
     public static final Material CrudeRhodiumMetal = DustMaterial(868, "crude_rhodium_metal", 0x666666, MaterialIconSet.DULL, 2, of(new MaterialStack(Rhodium, 1), new MaterialStack(RareEarth, 1)), of(DISABLE_DECOMPOSITION));
     public static final Material SodiumNitrate = DustMaterial(865, "sodium_nitrate", 0x846684, MaterialIconSet.ROUGH, 2, of(new MaterialStack(Sodium, 1), new MaterialStack(Nitrogen, 1), new MaterialStack(Oxygen, 3)), of(DISABLE_DECOMPOSITION));
@@ -624,7 +675,6 @@ public class GTXMaterials {
     public static final Material RhodiumFilterCake = DustMaterial(862, "rhodium_filter_cake", RhodiumNitrate.getMaterialRGB()-10, MaterialIconSet.QUARTZ, 2, of(new MaterialStack(Rhodium, 1), new MaterialStack(RareEarth, 1)), of(DISABLE_DECOMPOSITION));
 
 
-    public static final Material PotassiumDichromate = DustMaterial(845, "potassium_dichromate", 0xFF084E, MaterialIconSet.DULL, 0, of(new MaterialStack(Potassium, 2), new MaterialStack(Chromium, 2), new MaterialStack(Oxygen, 7)), of());
     public static final Material Triniite = DustMaterial(836,"triniite",0x5F5A76, MaterialIconSet.SHINY, 7, of(new MaterialStack(Trinium, 3), new MaterialStack(Actinium, 3), new MaterialStack(Selenium, 4), new MaterialStack(Astatine, 4)), of(GENERATE_ORE, DISABLE_DECOMPOSITION));
     public static final Material SilverOxide = DustMaterial(835, "silver_oxide", 0x4D4D4D, MaterialIconSet.DULL, 2, of(new MaterialStack(Silver, 2), new MaterialStack(Oxygen, 1)), of());
     public static final Material SilverChloride = DustMaterial(834, "silver_chloride", 0xFEFEFE, MaterialIconSet.DULL, 2, of(new MaterialStack(Silver, 1), new MaterialStack(Chlorine, 1)), of(DISABLE_DECOMPOSITION, GENERATE_FLUID_BLOCK));
@@ -1769,21 +1819,27 @@ public class GTXMaterials {
     public static final Material FinelyPowderedRutile = SimpleDustMaterial("finely_powdered_rutile", 0xffffff, (short) 959, MaterialIconSet.FINE, "TiO2");
     public static final Material InertResidues = SimpleDustMaterial("inert_residues", 0x61587a, (short) 960, MaterialIconSet.SHINY);
 
+
+
     public static Material SamariumMagnetic;
     public static Material Quantum;
 
+    //public static Material SodiumEthylXanthate = SimpleDustMaterial("sodium_ethyl_xanthate", 0xffffff, (short)0, MaterialIconSet.BRIGHT, "CH3CH2OCS2Na");
 
+    public static Material CarbonDisulfide = new Material.Builder(GTXMod.id("carbon_disulfide"))
+            .color((Carbon.getMaterialRGB() + Sulfur.getMaterialRGB()) / 2)
+            .liquid()
+            .components(Carbon, 1, Sulfur, 2)
+            .iconSet(MaterialIconSet.DULL)
+            .buildAndRegister();
 
-
+    public static Material SodiumEthylXanthate = new Material.Builder(GTXMod.id("sodium_ethyl_xanthate"))
+            .color((SodiumEthoxide.getMaterialRGB() + CarbonDisulfide.getMaterialRGB()) / 2)
+            .dust()
+            .iconSet(MaterialIconSet.BRIGHT)
+            .components(SodiumEthoxide, 1, CarbonDisulfide, 1)
+            .buildAndRegister();
     public static void init() {
-        /*Zirconium = new Builder(id("zirconium"))
-                .ingot()
-                .color(0xE0E1E1)
-                .iconSet(MaterialIconSet.METALLIC)
-                .element(GTElements.Zr)
-                .buildAndRegister();*/
-
-
         GoldChain.init();
         LithiumChain.init();
     }
@@ -1841,6 +1897,7 @@ public class GTXMaterials {
         GTMaterials.Germanium.addFlags(MaterialFlags.GENERATE_PLATE);
         GTMaterials.Seaborgium.addFlags(MaterialFlags.GENERATE_FRAME);
         GTMaterials.Bohrium.addFlags(MaterialFlags.GENERATE_FRAME, MaterialFlags.GENERATE_ROUND);
+
     }
 
 }

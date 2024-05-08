@@ -7,8 +7,13 @@ import com.gregtechceu.gtceu.api.data.chemical.material.event.PostMaterialEvent;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
+import com.playx.gtx.blocks.GTXBlocks;
 import com.playx.gtx.common.data.GTXCreativeModeTabs;
+import com.playx.gtx.data.GTXDataGen;
+import com.playx.gtx.items.GTXItems;
+import com.playx.gtx.machines.GTXMachines;
 import com.playx.gtx.materials.GTXMaterials;
+import com.playx.gtx.recipes.GTXRecipeTypes;
 import com.playx.gtx.recipes.GTXRecipes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
@@ -28,8 +33,10 @@ public class GTXMod {
     public static final Logger LOGGER = LogManager.getLogger();
 
     public GTXMod() {
-
+        GTXDataGen.init();
         GTXCreativeModeTabs.init();
+        GTXBlocks.init();
+        GTXItems.init();
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addListener(this::commonSetup);
@@ -46,6 +53,7 @@ public class GTXMod {
         MinecraftForge.EVENT_BUS.register(this);
 
         GTXRegistries.REGISTRATE.registerRegistrate();
+        
 
 
     }
@@ -85,10 +93,10 @@ public class GTXMod {
     }
 
     private void registerRecipeTypes(GTCEuAPI.RegisterEvent<ResourceLocation, GTRecipeType> event) {
-        //CustomRecipeTypes.init();
+        GTXRecipeTypes.init();
     }
 
     private void registerMachines(GTCEuAPI.RegisterEvent<ResourceLocation, MachineDefinition> event) {
-        //CustomMachines.init();
+        GTXMachines.init();
     }
 }

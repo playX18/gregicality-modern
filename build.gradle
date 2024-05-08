@@ -29,6 +29,11 @@ loom {
                 "gtx.mixins.json"
         ]
 
+        dataGen{
+            mod("gtx")
+        }
+
+
         // missing access transformers?
         // don't worry, you can still use them!
         // note that your AT *MUST* be located at
@@ -37,6 +42,10 @@ loom {
         // also, any names used in your access transformer will need to be
         // in SRG mapped ("func_" / "field_" with MCP class names) to work!
         // (both of these things may be subject to change in the future)
+    }
+
+    runConfigs.named("data").configure {
+        programArg("--existing=" + file("src/main/resources").absolutePath)
     }
 }
 
@@ -103,7 +112,10 @@ dependencies {
     modCompileOnly("mezz.jei:jei-$project.minecraft_version-forge-api:$project.jei_version") { transitive = false }
     modCompileOnly("mezz.jei:jei-$project.minecraft_version-common-api:$project.jei_version") { transitive = false }
 
-    modImplementation("curse.maven:gt-985872:5251216")
+    // GT--
+    modImplementation("curse.maven:gt-985872:5319836")
+    runtimeOnly "thedarkcolour:kotlinforforge:4.10.0"
+    // GT-- end
     modImplementation("com.gregtechceu.gtceu:gtceu-$project.minecraft_version:$project.gtceu_version") { transitive = false }
     modImplementation("com.lowdragmc.ldlib:ldlib-forge-$project.minecraft_version:$project.ldlib_version") { transitive = false }
     modImplementation("com.tterrag.registrate:Registrate:$project.registrate_version")
