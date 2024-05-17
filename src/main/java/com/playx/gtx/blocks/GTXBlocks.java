@@ -1,6 +1,7 @@
 package com.playx.gtx.blocks;
 
 import com.gregtechceu.gtceu.api.block.RendererBlock;
+import com.gregtechceu.gtceu.api.block.RendererGlassBlock;
 import com.gregtechceu.gtceu.api.item.RendererBlockItem;
 import com.gregtechceu.gtceu.client.renderer.block.TextureOverrideRenderer;
 import com.gregtechceu.gtceu.common.data.GTBlocks;
@@ -70,6 +71,14 @@ public class GTXBlocks {
     public static BlockEntry<Block> HSS_S_CASING = simpleCasing("casings/metal_casings/hss_s");
     public static BlockEntry<Block> LEAD_CASING = simpleCasing("casings/metal_casings/lead");
     public static BlockEntry<Block> NAQUADRIA_CASING = simpleCasing("casings/metal_casings/naquadria");
+    public static BlockEntry<Block> BOROSILICATE_REINFORCED_GLASS = createGlassCasingBlock("borosilicate_reinforced_glass", GTXMod.id("block/casings/transparent/borosilicate_reinforced_glass"), () -> RenderType::translucent);
+    public static BlockEntry<Block> NICKEL_REINFORCED_GLASS = createGlassCasingBlock("nickel_reinforced_glass", GTXMod.id("block/casings/transparent/nickel_reinforced_glass"), () -> RenderType::translucent);
+    public static BlockEntry<Block> CHROME_REINFORCED_GLASS = createGlassCasingBlock("chrome_reinforced_glass", GTXMod.id("block/casings/transparent/chrome_reinforced_glass"), () -> RenderType::translucent);
+    public static BlockEntry<Block> TUNGSTEN_REINFORCED_GLASS = createGlassCasingBlock("tungsten_reinforced_glass", GTXMod.id("block/casings/transparent/tungsten_reinforced_glass"), () -> RenderType::translucent);
+    public static BlockEntry<Block> IRIDIUM_REINFORCED_GLASS = createGlassCasingBlock("iridium_reinforced_glass", GTXMod.id("block/casings/transparent/iridium_reinforced_glass"), () -> RenderType::translucent);
+    public static BlockEntry<Block> OSMIRIDIUM_REINFORCED_GLASS = createGlassCasingBlock("osmiridium_reinforced_glass", GTXMod.id("block/casings/transparent/osmium_reinforced_glass"), () -> RenderType::translucent);
+
+
     public static BlockEntry<Block> simpleCasing(String location) {
         var path = location.split("/");
         var name = path[path.length - 1];
@@ -109,9 +118,23 @@ public class GTXBlocks {
                 .register();
     }
 
+    private static BlockEntry<Block> createSidedCasingBlock(String name, String texture) {
+        return createCasingBlock(
+                name, (properties, iRenderer) -> new RendererBlock(properties,
+                        Platform.isClient() ? new TextureOverrideRenderer(new ResourceLocation("block/cube_bottom_top"),
+                                Map.of("bottom", GTXMod.id(texture + "/bottom"),
+                                        "top", GTXMod.id(texture + "/top"),
+                                        "side", GTXMod.id(texture + "/side"))) : null),
+                GTXMod.id(texture), () -> Blocks.IRON_BLOCK, () -> RenderType::cutoutMipped
+        );
+    }
+
+    private static BlockEntry<Block> createGlassCasingBlock(String name, ResourceLocation texture, Supplier<Supplier<RenderType>> type) {
+        return createCasingBlock(name, RendererGlassBlock::new, texture, () -> Blocks.GLASS, type);
+    }
 
 
     public static void init() {
-
+        GTXCoils.init();
     }
 }

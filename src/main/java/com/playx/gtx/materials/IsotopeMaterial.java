@@ -13,9 +13,9 @@ import java.util.Map;
 public class IsotopeMaterial extends EnrichmentProcess {
     public static Map<Material, IsotopeMaterial> REGISTRY = new HashMap<>();
 
-    private final int nuclide;
+    private int nuclide = 0;
     @Getter
-    private final RadioactiveMaterial radioactiveMaterial;
+    private RadioactiveMaterial radioactiveMaterial = null;
 
     public boolean fertile = false;
     public boolean fissile = false;
@@ -24,13 +24,13 @@ public class IsotopeMaterial extends EnrichmentProcess {
     public final Map<IsotopeMaterial, Integer> isotopeDecay = new HashMap<>();
 
     public IsotopeMaterial(RadioactiveMaterial material, int nuclide, MaterialFlag... flags) {
-        this(new Material.Builder(GTXMod.id(material.getMaterial().getName() + "_" + nuclide))
+        /*this(new Material.Builder(GTXMod.id(material.getMaterial().getName() + "_" + nuclide))
                 .color(material.getMaterial().getMaterialRGB())
                 .iconSet(material.getMaterial().getMaterialIconSet())
                 //.components(material.getMaterial().getMaterialComponents())
                 .flags(flags)
                 //.element(material.getMaterial().getElement())
-                .buildAndRegister(), material, nuclide);
+                .buildAndRegister(), material, nuclide);*/
     }
 
     public IsotopeMaterial(Material from, RadioactiveMaterial material, int nuclide) {

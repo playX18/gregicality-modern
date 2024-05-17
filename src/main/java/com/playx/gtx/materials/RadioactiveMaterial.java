@@ -9,6 +9,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialStack;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.playx.gtx.GTXMod;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import lombok.NonNull;
 import net.minecraft.world.item.Item;
 
 import java.util.HashMap;
@@ -36,7 +37,8 @@ public class RadioactiveMaterial extends EnrichmentProcess {
                 .buildAndRegister());
     }
 
-    public RadioactiveMaterial(Material from) {
+    public RadioactiveMaterial(@NonNull Material from) {
+
         this.material = from;
         this.material.addFlags(GTXMaterials.GENERATE_NUCLEAR_COMPOUND, GTXMaterials.DISABLE_REPLICATION);
         REGISTRY.put(from, this);

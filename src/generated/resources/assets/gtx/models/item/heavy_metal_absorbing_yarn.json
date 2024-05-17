@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "gtx:item/heavy_metal_absorbing_yarn"
+  }
+}

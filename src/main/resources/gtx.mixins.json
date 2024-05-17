@@ -2,12 +2,17 @@
   "required": true,
   "package": "com.playx.gtx.mixin",
   "compatibilityLevel": "JAVA_17",
+  "plugin": "com.playx.gtx.mixin.GTXMixinPlugin",
   "minVersion": "0.8",
   "mixins": [
+    "GTOresAccessor",
+    "GTOreMixin",
+    "GTOresMixin"
   ],
   "client": [
   ],
   "injectors": {
-    "defaultRequire": 1
+    "defaultRequire": 1,
+    "maxShiftBy": 2
   }
 }

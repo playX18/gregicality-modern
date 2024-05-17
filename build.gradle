@@ -16,7 +16,7 @@ java {
 
 loom {
     // use this if you are using the official mojang mappings
-    // and want loom to stop warning you about their license
+    // and want loom to stop warning you abo./grut their license
     silentMojangMappingsLicense()
 
     // since loom 0.10, you are **required** to use the
@@ -113,8 +113,9 @@ dependencies {
     modCompileOnly("mezz.jei:jei-$project.minecraft_version-common-api:$project.jei_version") { transitive = false }
 
     // GT--
-    modImplementation("curse.maven:gt-985872:5319836")
-    runtimeOnly "thedarkcolour:kotlinforforge:4.10.0"
+    modImplementation("curse.maven:gt-985872:5334414")
+    modImplementation("curse.maven:kotlin-for-forge-351264:4578885")
+
     // GT-- end
     modImplementation("com.gregtechceu.gtceu:gtceu-$project.minecraft_version:$project.gtceu_version") { transitive = false }
     modImplementation("com.lowdragmc.ldlib:ldlib-forge-$project.minecraft_version:$project.ldlib_version") { transitive = false }
