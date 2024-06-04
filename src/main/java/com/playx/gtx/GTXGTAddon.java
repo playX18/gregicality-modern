@@ -4,6 +4,7 @@ import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import com.playx.gtx.materials.GTXElements;
+import com.playx.gtx.materials.GTXTags;
 import com.playx.gtx.recipes.GTXRecipes;
 import net.minecraft.data.recipes.FinishedRecipe;
 
@@ -29,7 +30,7 @@ public class GTXGTAddon implements IGTAddon {
 
     @Override
     public void registerTagPrefixes() {
-        //CustomTagPrefixes.init();
+        GTXTags.init();
     }
 
     @Override

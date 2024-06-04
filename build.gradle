@@ -113,7 +113,7 @@ dependencies {
     modCompileOnly("mezz.jei:jei-$project.minecraft_version-common-api:$project.jei_version") { transitive = false }
 
     // GT--
-    modImplementation("curse.maven:gt-985872:5334414")
+    modImplementation("curse.maven:gt-985872:5367090")
     modImplementation("curse.maven:kotlin-for-forge-351264:4578885")
 
     // GT-- end

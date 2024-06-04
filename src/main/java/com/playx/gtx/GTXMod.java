@@ -7,6 +7,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.event.PostMaterialEvent;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
+import com.playx.gtx.api.forge.GTXCapability;
 import com.playx.gtx.blocks.GTXBlocks;
 import com.playx.gtx.common.data.GTXCreativeModeTabs;
 import com.playx.gtx.data.GTXDataGen;
@@ -18,11 +19,16 @@ import com.playx.gtx.recipes.GTXRecipes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.item.ItemEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,7 +42,6 @@ public class GTXMod {
         GTXDataGen.init();
         GTXCreativeModeTabs.init();
         GTXBlocks.init();
-        GTXItems.init();
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addListener(this::commonSetup);
@@ -44,6 +49,8 @@ public class GTXMod {
         modEventBus.addListener(this::addMaterialRegistries);
         modEventBus.addListener(this::addMaterials);
         modEventBus.addListener(this::modifyMaterials);
+        modEventBus.addListener(this::addItems);
+        modEventBus.addListener(GTXCapability::register);
         modEventBus.addGenericListener(GTRecipeType.class, this::registerRecipeTypes);
         modEventBus.addGenericListener(MachineDefinition.class, this::registerMachines);
 
@@ -53,8 +60,8 @@ public class GTXMod {
         MinecraftForge.EVENT_BUS.register(this);
 
         GTXRegistries.REGISTRATE.registerRegistrate();
-        
 
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> GTXClient::init);
 
     }
 
@@ -75,6 +82,9 @@ public class GTXMod {
     }
 
 
+    private void addItems(PostMaterialEvent event) {
+        GTXItems.init();
+    }
 
     // You MUST have this for custom materials.
     // Remember to register them not to GT's namespace, but your own.
@@ -99,4 +109,5 @@ public class GTXMod {
     private void registerMachines(GTCEuAPI.RegisterEvent<ResourceLocation, MachineDefinition> event) {
         GTXMachines.init();
     }
+
 }

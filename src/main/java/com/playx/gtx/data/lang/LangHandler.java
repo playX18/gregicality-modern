@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.playx.gtx.GTXMod;
 import com.playx.gtx.GTXRegistries;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +23,13 @@ import java.util.stream.Collectors;
 
 public class LangHandler {
     public static void init(RegistrateLangProvider provider) {
+        for (var tagPrefix : TagPrefix.values()) {
+            provider.add(tagPrefix.getUnlocalizedName(), tagPrefix.langValue());
+        }
 
+        provider.add("hatch.nuclear_reactor.temperature", "Temperature: %sC");
+        provider.add("hatch.nuclear_reactor_fluid.title", "Fluid Reactor Hatch");
+        provider.add("hatch.nuclear_reactor_item.title", "Item Reactor Hatch");
     }    
 
     /**

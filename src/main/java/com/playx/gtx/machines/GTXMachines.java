@@ -6,16 +6,22 @@ import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
+import com.gregtechceu.gtceu.api.machine.multiblock.CoilWorkableElectricMultiblockMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMachine;
 import com.gregtechceu.gtceu.api.pattern.FactoryBlockPattern;
 import com.gregtechceu.gtceu.api.pattern.Predicates;
+import com.gregtechceu.gtceu.api.recipe.OverclockingLogic;
 import com.gregtechceu.gtceu.common.data.*;
 import com.lowdragmc.lowdraglib.side.fluid.FluidHelper;
 import com.playx.gtx.GTXMod;
 import com.playx.gtx.GTXRegistries;
 import com.playx.gtx.blocks.GTXBlocks;
+import com.playx.gtx.fission.ReactorHatch;
+import com.playx.gtx.machines.multi.ChemicalFactory;
 import com.playx.gtx.machines.multi.IndustrialPrimitiveBlastFurnace;
+import com.playx.gtx.machines.multi.NuclearReactor;
+import com.playx.gtx.recipes.GTXRecipeTypes;
 import it.unimi.dsi.fastutil.ints.Int2LongFunction;
 
 public class GTXMachines {
@@ -47,34 +53,51 @@ public class GTXMachines {
             .compassSections(GTCompassSections.STEAM)
             .compassNodeSelf()
             .register();
-
-    /*public static final MultiblockMachineDefinition FROTH_FLOTATION_CELL = GTXRegistries.REGISTRATE.multiblock("froth_flotation_cell", WorkableMultiblockMachine::new)
-            .recipeType(GTXRecipeTypes.FROTH_FLOTATION_RECIPES)
+    public static final MachineDefinition CHEMICAL_FACTORY = GTXRegistries.REGISTRATE.multiblock("chemical_factory", CoilWorkableElectricMultiblockMachine::new)
+            .rotationState(RotationState.NON_Y_AXIS)
+            .recipeTypes(GTXRecipeTypes.CHEMICAL_FACTORY_RECIPES, GTRecipeTypes.LARGE_CHEMICAL_RECIPES)
+            .recipeModifier(GTRecipeModifiers.PARALLEL_HATCH)
+            .recipeModifier(GTRecipeModifiers.ELECTRIC_OVERCLOCK.apply(OverclockingLogic.NON_PERFECT_OVERCLOCK))
+            .recipeModifier(ChemicalFactory::recipeModifier)
+            .appearanceBlock(GTBlocks.CASING_PTFE_INERT)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("X###X", "XXXXX", "X###X", "XXXXX", "X###X")
+                    .aisle("XXXXX", "XCCCX", "XPPPX", "XCCCX", "XXXXX")
+                    .aisle("X###X", "XPPPX", "XMMMX", "XPPPX", "X###X")
+                    .aisle("XXXXX", "XCCCX", "XPPPX", "XCCCX", "XXXXX")
+                    .aisle("X###X", "SXXXX", "X###X", "XXXXX", "X###X")
+                    .where('S', Predicates.controller(Predicates.blocks(definition.getBlock())))
+                    .where('X', Predicates.blocks(GTBlocks.CASING_PTFE_INERT.get()).or(Predicates.autoAbilities(definition.getRecipeTypes())).or(Predicates.abilities(PartAbility.PARALLEL_HATCH)))
+                    .where('C', Predicates.heatingCoils())
+                    .where('P', Predicates.blocks(GTBlocks.CASING_POLYTETRAFLUOROETHYLENE_PIPE.get()))
+                    .where('#', Predicates.air())
+                    .where('M', Predicates.blocks(GTBlocks.CASING_PTFE_INERT.get()))
+                    .build())
+            .workableCasingRenderer(GTCEu.id("block/casings/solid/machine_casing_inert_ptfe"),
+                    GTCEu.id("block/machines/chemical_reactor"), false)
             .register();
-    */
-
-    public static MultiblockMachineDefinition NUCLEAR_REACTOR = GTXRegistries.REGISTRATE.multiblock("nuclear_reactor", WorkableElectricMultiblockMachine::new)
+    public static MultiblockMachineDefinition NUCLEAR_REACTOR = GTXRegistries.REGISTRATE.multiblock("nuclear_reactor", (def) -> new NuclearReactor(def))
             .rotationState(RotationState.ALL)
-            .recipeType(GTRecipeTypes.CHEMICAL_RECIPES)
+            .recipeType(GTXRecipeTypes.NUCLEAR_REACTOR_RECIPES)
             .appearanceBlock(GTXBlocks.CLADDED_REACTOR_CASING)
             .workableCasingRenderer(
                     GTXMod.id("block/casings/solid/cladded_reactor_casing"),
                     GTXMod.id("block/machines/nuclear_reactor"),
-                    false)
+                    true)
             .pattern(definition ->
                     FactoryBlockPattern.start()
-                            .aisle("YYY", "ZXZ", "ZXZ", "ZXZ", "ZXZ", "ZXZ", "ZXZ", "ZXZ", "YYY")
-                            .aisle("YYY", "XRX", "XRX", "XRX", "XRX", "XRX", "XRX", "XRX", "YYY")
-                            .aisle("YSY", "ZXZ", "ZXZ", "ZXZ", "ZXZ", "ZXZ", "ZXZ", "ZXZ", "YYY")
+                            .aisle(" YYY ", " YYY ", " YYY ")
+                            .aisle("YYYYY", "Y###Y", "YXXXY")
+                            .aisle("YYYYY", "Y###Y", "YXXXY")
+                            .aisle("YYYYY", "Y###Y", "YXXXY")
+                            .aisle(" YSY ", " YYY ", " YYY ")
                             .where('S', Predicates.controller(Predicates.blocks(definition.getBlock())))
-                            .where('Y', Predicates.autoAbilities(definition.getRecipeTypes()).or(Predicates.blocks(GTXBlocks.CLADDED_REACTOR_CASING.get())))
-                            .where('Z', Predicates.blocks(GTXBlocks.CLADDED_REACTOR_CASING.get()))
-                            .where('X', Predicates.blocks(GTBlocks.CASING_TEMPERED_GLASS.get()).or(Predicates.blocks(GTXBlocks.CLADDED_REACTOR_CASING.get())))
-                            .where('R', Predicates.air())
+                            .where('Y', Predicates.blocks(GTXBlocks.CLADDED_REACTOR_CASING.get()))
+                            .where('#' ,Predicates.air())
+                            .where(' ', Predicates.air())
+                            .where('X', Predicates.blocks(GTXMachines.REACTOR_HATCH_FLUID.get()).or(Predicates.blocks(GTXMachines.REACTOR_HATCH_ITEM.get())).or(Predicates.blocks(GTXBlocks.CLADDED_REACTOR_CASING.get())))
                             .build())
             .register();
-
-
     public static MachineDefinition ADVANCED_ASSEMBLY_LINE = GTXRegistries.REGISTRATE.multiblock("component_assembly_line", WorkableElectricMultiblockMachine::new)
             .rotationState(RotationState.ALL)
             .recipeType(GTRecipeTypes.ASSEMBLY_LINE_RECIPES)
@@ -139,6 +162,17 @@ public class GTXMachines {
                         .build();
             }).register();
 
+    public static MachineDefinition REACTOR_HATCH_ITEM = GTXRegistries.REGISTRATE.machine("reactor_hatch_item", (def) -> new ReactorHatch(def, false))
+            .abilities(PartAbility.IMPORT_ITEMS, PartAbility.EXPORT_ITEMS)
+            .rotationState(RotationState.ALL)
+            .modelRenderer(() -> GTXMod.id("block/machine/part/reactor_hatch_item"))
+            .register();
+
+    public static MachineDefinition REACTOR_HATCH_FLUID = GTXRegistries.REGISTRATE.machine("reactor_hatch_fluid", (def) -> new ReactorHatch(def, true))
+            .modelRenderer(() -> GTXMod.id("block/machine/part/reactor_hatch_fluid"))
+            .rotationState(RotationState.ALL)
+            .abilities(PartAbility.IMPORT_FLUIDS, PartAbility.EXPORT_FLUIDS)
+            .register();
 
     public static void init() {
 
